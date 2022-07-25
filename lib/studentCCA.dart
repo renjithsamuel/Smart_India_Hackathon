@@ -91,7 +91,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
     return Scaffold(
       
       appBar: AppBar(
-        title: const Text('Retrieve Text Input'),
+        title: const Text('Student Co-curricular activities'),
       ),
       body: SingleChildScrollView(
         child: Padding(
