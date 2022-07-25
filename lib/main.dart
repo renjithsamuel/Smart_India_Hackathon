@@ -73,27 +73,35 @@ class _studentHomeState extends State<studentHome> {
           ],
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
-        child: ListView(
-          children: <Widget>[
-            getCards('./lib/assets/icon pack - 1.jpg', 'Attendance',
-                'Here is a second line'),
-            getCards('./lib/assets/icon pack - 2.jpg', 'Profile',
-                'Here is a second line'),
-            getCards('./lib/assets/icon pack - 3.jpg', 'Exam',
-                'Here is a second line'),
-            getCards('./lib/assets/icon pack - 4.jpg', 'Time-Table',
-                'Here is a second line'),
-            getCards('./lib/assets/icon pack - 5.jpg', 'Library',
-                'Here is a second line'),
-            getCards('./lib/assets/icon pack - 6.jpg', 'Activity',
-                'Here is a second line'),
-            getCards('./lib/assets/icon pack - 7.jpg', 'Apply leave',
-                'Here is a second line'),
-            getCards('./lib/assets/icon pack - 8.jpg', 'Track Bus',
-                'Here is a second line')
-          ],
+      body: Center(
+        child: Container(width: 1500,
+          child: Material(
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.purple[100],
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+              child: ListView(
+                children: <Widget>[
+                  getCards('./lib/assets/icon pack - 1.jpg', 'Attendance',
+                      'Here is a second line'),
+                  getCards('./lib/assets/icon pack - 2.jpg', 'Profile',
+                      'Here is a second line'),
+                  getCards('./lib/assets/icon pack - 3.jpg', 'Exam',
+                      'Here is a second line'),
+                  getCards('./lib/assets/icon pack - 4.jpg', 'Time-Table',
+                      'Here is a second line'),
+                  getCards('./lib/assets/icon pack - 5.jpg', 'Library',
+                      'Here is a second line'),
+                  getCards('./lib/assets/icon pack - 6.jpg', 'Activity',
+                      'Here is a second line'),
+                  getCards('./lib/assets/icon pack - 7.jpg', 'Apply leave',
+                      'Here is a second line'),
+                  getCards('./lib/assets/icon pack - 8.jpg', 'Track Bus',
+                      'Here is a second line')
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
