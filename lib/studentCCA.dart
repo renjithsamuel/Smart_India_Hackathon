@@ -7,8 +7,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Retrieve Text Input',
+    return  MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Student Co-curricular activities',
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+      ),
       home: MyCustomForm(),
     );
   }
@@ -29,8 +33,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
   // of the TextField.
 
   final studentidController = TextEditingController();
-    final activitynameController = TextEditingController();
- 
+  final activitynameController = TextEditingController();
 
   @override
   void dispose() {
@@ -41,19 +44,36 @@ class _MyCustomFormState extends State<MyCustomForm> {
   }
 
   // date picker init
-  DateTime _date = DateTime(2020, 11, 17);
+  DateTime _sdate = DateTime(2020, 11, 17);
 
-  void _selectDate() async {
-    final DateTime? newDate = await showDatePicker(
+  void _selectstartDate() async {
+    final DateTime? newsDate = await showDatePicker(
       context: context,
-      initialDate: _date,
+      initialDate: _sdate,
       firstDate: DateTime(1930, 1),
       lastDate: DateTime(2030, 7),
       helpText: 'Select a date',
     );
-    if (newDate != null) {
+    if (newsDate != null) {
       setState(() {
-        _date = newDate;
+        _sdate = newsDate;
+      });
+    }
+  }
+
+
+    DateTime _edate = DateTime(2020, 11, 17);
+    void _selectendDate() async {
+    final DateTime? neweDate = await showDatePicker(
+      context: context,
+      initialDate: _edate,
+      firstDate: DateTime(1930, 1),
+      lastDate: DateTime(2030, 7),
+      helpText: 'Select a date',
+    );
+    if (neweDate != null) {
+      setState(() {
+        _edate = neweDate;
       });
     }
   }
@@ -66,10 +86,10 @@ class _MyCustomFormState extends State<MyCustomForm> {
 
   // List of items in our dropdown menu
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: AppBar(
         title: const Text('Retrieve Text Input'),
       ),
@@ -79,26 +99,36 @@ class _MyCustomFormState extends State<MyCustomForm> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              // activity name 
-                Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextFormField(
-                  controller: activitynameController,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Enter Activity name',
+              // activity name
+
+              Row(
+                children: [
+                  Expanded(flex: 2, child: Text('Activity id:  ')),
+                  Expanded(
+                    flex: 2,
+                    child: SizedBox(
+                      width: 250,
+                      child: TextFormField(
+                        controller: activitynameController,
+                        decoration: const InputDecoration(
+                          border: UnderlineInputBorder(),
+                          labelText: 'Enter Activity name',
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  Expanded(
+                    flex: 10,
+                    child: Text(''),
+                  )
+                ],
               ),
 
-              
               // activity type
 
               Row(
                 children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text('Activity Type:  ')),
+                  Expanded(flex: 2, child: Text('Activity Type:  ')),
                   Expanded(
                     flex: 2,
                     child: DropdownButton<String>(
@@ -113,7 +143,6 @@ class _MyCustomFormState extends State<MyCustomForm> {
                       onChanged: (String? newValue) {
                         setState(() {
                           dropdownValue2 = newValue!;
-                          
                         });
                       },
                       items: <String>[
@@ -129,114 +158,137 @@ class _MyCustomFormState extends State<MyCustomForm> {
                       }).toList(),
                     ),
                   ),
-                  Expanded(
-                    flex: 10,
-                    child: Text(""))
+                  Expanded(flex: 10, child: Text(""))
                 ],
               ),
 
-
-                // status 
+              // status
               Row(
-                children: [Text('Status :  '),
-                  DropdownButton<String>(
-                    value: dropdownValue3,
-                    icon: const Icon(Icons.arrow_downward),
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.deepPurpleAccent,
+                children: [
+                  Expanded(flex: 2, child: Text('Status :  ')),
+                  Expanded(
+                    flex: 2,
+                    child: DropdownButton<String>(
+                      value: dropdownValue3,
+                      icon: const Icon(Icons.arrow_downward),
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.deepPurple),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.deepPurpleAccent,
+                      ),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          dropdownValue3 = newValue!;
+                        });
+                      },
+                      items: <String>["Choose", "Winner", "Participated"]
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     ),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        dropdownValue3 = newValue!;
-                      });
-                    },
-                    items: <String>["Choose", "Winner", "Participated"]
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
                   ),
+                  Expanded(
+                    flex: 10,
+                    child: Text(''),
+                  )
                 ],
               ),
 
               // startdate
               Row(
                 children: [
-                  Text('Start Date:  '),
-                  ElevatedButton(
-                    onPressed: _selectDate,
-                    child: Text('SELECT DATE OF START DATE'),
+                  Expanded(flex: 2 ,child: Text('Start Date:  ')),
+                  Expanded(flex: 5,
+                    child: ElevatedButton(
+                      onPressed: _selectstartDate,
+                      child: Text('SELECT DATE OF START DATE'),
+                    ),
                   ),
-                ],
-              ),
+                  Expanded(flex:5,child: Text('')),
               SizedBox(height: 8),
               Text(
-                'Selected DOB: $_date',
+                'Selected Start date: $_sdate',
+              ),
+                ],
               ),
 
-              
-
+              SizedBox(height: 8),
               // END DATE
               Row(
-                children: [Text('End Date:  '),
-                  ElevatedButton(
-                    onPressed: _selectDate,
-                    child: Text('SELECT DATE OF END DATE'),
+                children: [
+                  Expanded(flex:2,child: Text('End Date:  ')),
+                  Expanded(flex:5,
+                    child: ElevatedButton(
+                      onPressed: _selectendDate,
+                      child: Text('SELECT DATE OF END DATE'),
+                    ),
                   ),
+                  Expanded(flex:5,child: Text('')),
+                   SizedBox(height: 8),
+              Text(
+                'Selected End date: $_edate',
+              ),
                 ],
               ),
-              SizedBox(height: 8),
-              Text(
-                'Selected DOB: $_date',
-              ),
 
-              
+             
 
               // VERIFICATION
               Row(
                 children: [
-                  Text('Verification :  '),
-
-                  DropdownButton<String>(
-                    value: dropdownValue4,
-                    icon: const Icon(Icons.arrow_downward),
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.deepPurpleAccent,
+                  Expanded(flex: 2, child: Text('Verification :  ')),
+                  Expanded(
+                    flex: 2,
+                    child: DropdownButton<String>(
+                      value: dropdownValue4,
+                      icon: const Icon(Icons.arrow_downward),
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.deepPurple),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.deepPurpleAccent,
+                      ),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          dropdownValue4 = newValue!;
+                        });
+                      },
+                      items: <String>["Choose", "Accepted", "Rejected"]
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     ),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        dropdownValue4 = newValue!;
-                      });
-                    },
-                    items: <String>["Choose", "Accepted","Rejected"]
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
                   ),
+                  Expanded(flex: 10, child: Text(''))
                 ],
               ),
 
               // Text('Student ID :  '),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextFormField(
-                  controller: studentidController,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Enter your studentid',
+              Row(
+                children: [
+                  Expanded(flex: 2, child: Text('Student ID:  ')),
+                  Expanded(
+                    flex: 2,
+                    child: SizedBox(
+                      width: 250,
+                      child: TextFormField(
+                        controller: studentidController,
+                        decoration: const InputDecoration(
+                          border: UnderlineInputBorder(),
+                          labelText: 'Enter your studentid',
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  Expanded(flex: 10, child: Text(''))
+                ],
               ),
             ],
           ),
