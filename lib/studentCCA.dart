@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-// void main() => runApp(const MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -34,6 +35,8 @@ class _MyCustomFormState extends State<MyCustomForm> {
 
   final studentidController = TextEditingController();
   final activitynameController = TextEditingController();
+  final date_inputaController = TextEditingController();
+  final date_inputbController = TextEditingController();
 
   @override
   void dispose() {
@@ -43,48 +46,12 @@ class _MyCustomFormState extends State<MyCustomForm> {
     super.dispose();
   }
 
-  // date picker init
-  DateTime _sdate = DateTime(2020, 11, 17);
-
-  void _selectstartDate() async {
-    final DateTime? newsDate = await showDatePicker(
-      context: context,
-      initialDate: _sdate,
-      firstDate: DateTime(1930, 1),
-      lastDate: DateTime(2030, 7),
-      helpText: 'Select a date',
-      
-    );
-    if (newsDate != null) {
-      setState(() {
-        _sdate = newsDate;
-      });
-    }
-  }
-
-  DateTime _edate = DateTime(2020, 11, 17);
-  void _selectendDate() async {
-    final DateTime? neweDate = await showDatePicker(
-      context: context,
-      initialDate: _edate,
-      firstDate: DateTime(1930, 1),
-      lastDate: DateTime(2030, 7),
-      helpText: 'Select a date',
-    );
-    if (neweDate != null) {
-      setState(() {
-        _edate = neweDate;
-      });
-    }
-  }
 
   // DropdownButton
   // String dropdownValue1 = 'activity_name';
-  String dropdownValue2 = 'Choose';
-  String dropdownValue3 = 'Choose';
-  String dropdownValue4 = 'Choose';
-  bool is_sDateselected = false;
-   bool is_eDateselected = false;
+  String dropdownValue2 = 'Activity Type';
+  String dropdownValue3 = 'Status';
+  String dropdownValue4 = 'Verification';
 
   // List of items in our dropdown menu
 
@@ -141,23 +108,20 @@ class _MyCustomFormState extends State<MyCustomForm> {
                             Expanded(flex: 2, child: Text('Activity Type:  ')),
                             Expanded(
                               flex: 2,
-                              child: DropdownButton<String>(
+                              child: DropdownButtonFormField<String>(
                                 value: dropdownValue2,
-                                icon: const Icon(Icons.arrow_downward),
-                                elevation: 16,
+                                icon: const Icon(Icons.arrow_drop_down),
+                                elevation: 10,
                                 style:
-                                    const TextStyle(color: Colors.deepPurple),
-                                underline: Container(
-                                  height: 2,
-                                  color: Colors.deepPurpleAccent,
-                                ),
+                                const TextStyle(color: Colors.black54),
+
                                 onChanged: (String? newValue) {
                                   setState(() {
                                     dropdownValue2 = newValue!;
                                   });
                                 },
                                 items: <String>[
-                                  "Choose",
+                                  "Activity Type",
                                   "Technical",
                                   "Non-Technical",
                                   "Sports"
@@ -181,13 +145,13 @@ class _MyCustomFormState extends State<MyCustomForm> {
                               flex: 2,
                               child: DropdownButton<String>(
                                 value: dropdownValue3,
-                                icon: const Icon(Icons.arrow_downward),
+                                icon: const Icon(Icons.arrow_drop_down),
                                 elevation: 16,
                                 style:
-                                    const TextStyle(color: Colors.deepPurple),
+                                const TextStyle(color: Colors.black54),
                                 underline: Container(
-                                  height: 2,
-                                  color: Colors.deepPurpleAccent,
+                                  height: 0.51,
+                                  color: Colors.black,
                                 ),
                                 onChanged: (String? newValue) {
                                   setState(() {
@@ -195,7 +159,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
                                   });
                                 },
                                 items: <String>[
-                                  "Choose",
+                                  "Status",
                                   "Winner",
                                   "Participated"
                                 ].map<DropdownMenuItem<String>>((String value) {
@@ -218,17 +182,35 @@ class _MyCustomFormState extends State<MyCustomForm> {
                           children: [
                             Expanded(flex: 2, child: Text('Start Date:  ')),
                             Expanded(
-                              flex: 5,
-                              child: ElevatedButton(
-                                onPressed: _selectstartDate,
-                                child: Text('SELECT DATE OF START DATE'),
+                              flex: 2,
+                              child: TextField(
+                                controller: date_inputaController,
+                                decoration: InputDecoration(
+                                  hintText: 'Start Date',
+                                ),
+                                readOnly: true,
+                                onTap: () async {
+                                  DateTime? pickedDate = await showDatePicker(
+                                      context: context, initialDate: DateTime.now(),
+                                      firstDate: DateTime(2000),
+                                      lastDate: DateTime(2101)
+                                  );
+
+                                  if(pickedDate != null ){
+                                    print(pickedDate);
+                                    String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                                    print(formattedDate);
+
+                                    setState(() {
+                                      date_inputaController.text = formattedDate;
+                                    });
+                                  }else{
+                                    print("Date is not selected");
+                                  }
+                                },
                               ),
                             ),
-                            Expanded(flex: 5, child: Text('')),
-                            SizedBox(height: 8),
-                            Text(
-                              'Selected Start date: $_sdate',
-                            ),
+                            Expanded(flex:10,child: Container())
                           ],
                         ),
 
@@ -240,18 +222,37 @@ class _MyCustomFormState extends State<MyCustomForm> {
                           children: [
                             Expanded(flex: 2, child: Text('End Date:  ')),
                             Expanded(
-                              flex: 5,
-                              child: ElevatedButton(
-                                onPressed: _selectendDate,
-                                child: Text('SELECT DATE OF END DATE'),
+                              flex: 2,
+                              child: TextField(
+                                controller: date_inputbController,
+                                decoration: InputDecoration(
+                                  hintText: 'End Date',
+                                ),
+                                readOnly: true,
+                                onTap: () async {
+                                  DateTime? pickedDate = await showDatePicker(
+                                      context: context, initialDate: DateTime.now(),
+                                      firstDate: DateTime(2000),
+                                      lastDate: DateTime(2101)
+                                  );
+
+                                  if(pickedDate != null ){
+                                    print(pickedDate);
+                                    String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                                    print(formattedDate);
+
+                                    setState(() {
+                                      date_inputbController.text = formattedDate;
+                                    });
+                                  }else{
+                                    print("Date is not selected");
+                                  }
+                                },
                               ),
                             ),
-                            Expanded(flex: 5, child: Text('')),
-                            SizedBox(height: 8),
-                            Text(
-                              'Selected End date: $_edate',
-                            ),
+                            Expanded(flex:10,child: Container())
                           ],
+
                         ),
 
                         // VERIFICATION
@@ -262,13 +263,13 @@ class _MyCustomFormState extends State<MyCustomForm> {
                               flex: 2,
                               child: DropdownButton<String>(
                                 value: dropdownValue4,
-                                icon: const Icon(Icons.arrow_downward),
+                                icon: const Icon(Icons.arrow_drop_down),
                                 elevation: 16,
                                 style:
-                                    const TextStyle(color: Colors.deepPurple),
+                                const TextStyle(color: Colors.black54),
                                 underline: Container(
-                                  height: 2,
-                                  color: Colors.deepPurpleAccent,
+                                  height: 0.51,
+                                  color: Colors.black,
                                 ),
                                 onChanged: (String? newValue) {
                                   setState(() {
@@ -276,7 +277,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
                                   });
                                 },
                                 items: <String>[
-                                  "Choose",
+                                  "Verification",
                                   "Accepted",
                                   "Rejected"
                                 ].map<DropdownMenuItem<String>>((String value) {
