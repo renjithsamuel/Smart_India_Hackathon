@@ -1,16 +1,16 @@
-# flutter_application_sdform
 
-A new Flutter project.
+# SCHOOL MANAGEMENT SYSTEM
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+**COMPLETE SCHOOL MAINTAINING AND MONITORIN APP**    
+  
+**Powered by Flutter**  
+  
+  Can be installed in any device.  
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Attendance system.
+- Homework system.
+- learning outcome for each student.
+- Exam shedule and result.
+- Co-curricular activities verification.
+and a lot more...
